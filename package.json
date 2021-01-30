@@ -31,7 +31,6 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "anilist-wrapper": "^0.0.14",
     "animu-desu": "^1.0.10",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
