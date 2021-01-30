@@ -2,10 +2,10 @@ import express, { Request, Response, Router } from "express";
 
 const router: Router = express.Router();
 
-interface Route{
-    name: string,
-    description: string,
-    url: string,
+interface Route {
+  name: string;
+  description: string;
+  url: string;
 }
 
 var routes: Route[] = [
@@ -47,8 +47,16 @@ var routes: Route[] = [
 ];
 
 const getApiRoutes = (currentUrl: string): Route[] => {
-  routes.forEach((route) => route.url = `${currentUrl}${route.url}`);
-  return routes;
+  var formattedroutes= [] as Route[];
+
+  routes.forEach((route) => {
+    formattedroutes.push({
+      name: route.name,
+      description: route.description,
+      url: `${currentUrl}${route.url}`,
+    });
+  });
+  return formattedroutes;
 };
 
 router.get("/", (req: Request, res: Response) => {
