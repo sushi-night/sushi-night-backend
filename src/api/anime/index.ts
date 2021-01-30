@@ -15,7 +15,7 @@ router.use("/popular",popular);
 router.use("/search",search);
 router.use("/genreList",genrelist);
 router.use("/recentlyAdded",recentlyAdded);
-router.use("/animeDetails",animeDetails);
+router.use("/details",animeDetails);
 router.use("/watch",watch);
   
 export { router };
