@@ -12,37 +12,37 @@ var routes: Route[] = [
   {
     name: "Popular animes",
     description: "Get the popular animes by page.",
-    url: `/api/popular/:page`,
+    url: `/api/anime/popular/:page`,
   },
   {
     name: "Query Search",
     description: "Search for a something by page.",
-    url: `/api/search/:word/:page`,
+    url: `/api/anime/search/:word/:page`,
   },
   {
     name: "List of genres",
     description: "Get the list of genres available in gogoanime.",
-    url: `/api/genrelist`,
+    url: `/api/anime/genrelist`,
   },
   {
     name: "Search by genre",
     description: "Search for animes with some genre in some page.",
-    url: `/api/genre/:genre/:page`,
+    url: `/api/anime/search/:genre/:page`,
   },
   {
     name: "Recently added episodes",
     description: "get the recently added episodes by page.",
-    url: `/api/recentlyadded/:page`,
+    url: `/api/anime/recentlyadded/:page`,
   },
   {
     name: "Details of an anime",
     description: "Get the details of an anime by its ID.",
-    url: `/api/details/:id`,
+    url: `/api/anime/details/:id`,
   },
   {
     name: "Links for an episode of an anime",
     description: "Get links for an episode by its ID and episode.",
-    url: `/api/watch/:id/:episode`,
+    url: `/api/anime/watch/:id/:episode`,
   },
 ];
 
