@@ -17,7 +17,7 @@ var routes: Route[] = [
   {
     name: "Query Search",
     description: "Search for a something by page.",
-    url: `/api/anime/search/:word/:page`,
+    url: `/api/anime/search/q/:word/:page`,
   },
   {
     name: "List of genres",
@@ -27,7 +27,7 @@ var routes: Route[] = [
   {
     name: "Search by genre",
     description: "Search for animes with some genre in some page.",
-    url: `/api/anime/search/:genre/:page`,
+    url: `/api/anime/search/g/:genre/:page`,
   },
   {
     name: "Recently added episodes",
