@@ -1,6 +1,6 @@
-import express, { json, Request, Response, Router } from "express";
+import express, { Request, Response, Router } from "express";
 import { getAnimeDetails, search } from "animu-desu";
-import { AnimeAndDate } from "animu-desu/lib/types";
+import { AnimeAndDate } from "animu-desu";
 
 const router: Router = express.Router();
 

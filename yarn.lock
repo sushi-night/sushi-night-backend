@@ -94,10 +94,10 @@ accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-animu-desu@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/animu-desu/-/animu-desu-1.0.13.tgz#f48f948b315dd1daaf91cb353c8873cb4079f9e4"
-  integrity sha512-orRAC7FrdfA62AE+12O9BT6IOPo1V1cGlkhxQIRznnvUQZiEVcYjazFk3N8NgmxKjQcNWe2EZlagFkgH0YOSMg==
+animu-desu@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/animu-desu/-/animu-desu-1.0.14.tgz#20c8e0eecdb0ef0ab5de9b9f67e312c031db96bc"
+  integrity sha512-xxhRBZwG/nimFPqrEQtZP/u2QAxJ/ly6uVwHkqoXFLscAoCpodyO7f64+Q8S7yulA5ST0fMSpTF+N+Pn1r2WSQ==
   dependencies:
     axios "^0.21.1"
     cheerio "^1.0.0-rc.5"

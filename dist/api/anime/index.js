@@ -11,6 +11,7 @@ const genreList_1 = require("./genreList");
 const recentlyAdded_1 = require("./recentlyAdded");
 const animeDetails_1 = require("./animeDetails");
 const watch_1 = require("./watch");
+const getId_1 = require("./getId");
 const router = express_1.default.Router();
 exports.router = router;
 router.get("/", (req, res) => {
@@ -22,3 +23,4 @@ router.use("/genreList", genreList_1.router);
 router.use("/recentlyAdded", recentlyAdded_1.router);
 router.use("/details", animeDetails_1.router);
 router.use("/watch", watch_1.router);
+router.use("/getId", getId_1.router);
