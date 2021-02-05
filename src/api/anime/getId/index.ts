@@ -31,9 +31,8 @@ router.get(
     await compareYearAndTotalEpisodes(anilist, results).then((matching) =>
       matching.map((match) => {
         found.push(match)
-        console.log(JSON.stringify(match))
       })
-    );
+    ).catch((err) => res.json(err));
 
     if (found.length > 2) {
       await Promise.all(
@@ -81,10 +80,9 @@ async function compareYearAndTotalEpisodes(
           details.totalEpisodes === anilist.totalEpisodes - 1
         )
           matching.push(result);
-      });
+      })
     }
   }));
-  console.log("im returnin xd")
   return matching;
 }
 
