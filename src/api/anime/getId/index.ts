@@ -1,7 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import { getAnimeDetails, search } from "animu-desu";
-import { AnimeAndDate } from "animu-desu";
-
+import { getAnimeDetails, search, AnimeAndDate } from "animu-desu";
 const router: Router = express.Router();
 
 router.get(
@@ -18,7 +16,7 @@ router.get(
         totalEpisodes: parseInt(totalEpisodes),
       };
     } catch (err) {
-      res.json(err);
+      res.status(404).json(err);
     }
     let results = [] as AnimeAndDate[];
     let found = [] as AnimeAndDate[];
@@ -28,26 +26,26 @@ router.get(
       .then((data) => (results = data))
       .catch((err) => res.json(err));
 
-    await compareYearAndTotalEpisodes(anilist, results).then((matching) =>
-      matching.map((match) => {
-        found.push(match)
-      })
-    ).catch((err) => res.json(err));
+    await compareYearAndTotalEpisodes(anilist, results)
+      .then((matching) =>
+        matching.map((match) => {
+          found.push(match);
+        })
+      )
+      .catch((err) => res.status(404).json(err));
 
     if (found.length > 2) {
       await Promise.all(
         found.map(async (animeFromQuery) => {
           await getAnimeDetails(animeFromQuery.id)
             .then((details) => {
-              anilist.otherNames
-                .split(",")
-                .map((name) => {
-                  if (details.otherNames.includes(name)) {
-                    toReturn.push(details.id);
-                  }
-                });
+              anilist.otherNames.split(",").map((name) => {
+                if (details.otherNames.includes(name)) {
+                  toReturn.push(details.id);
+                }
+              });
             })
-            .catch((err) => res.json(err));
+            .catch((err) => res.status(404).json(err));
         })
       );
     } else {
@@ -72,17 +70,19 @@ async function compareYearAndTotalEpisodes(
   gogoResults: AnimeAndDate[]
 ): Promise<AnimeAndDate[]> {
   let matching = [] as AnimeAndDate[];
-  await Promise.all(gogoResults.map(async (result) => {
-    if (result.released === anilist.year) {
-      await getAnimeDetails(result.id).then((details) => {
-        if (
-          details.totalEpisodes === anilist.totalEpisodes ||
-          details.totalEpisodes === anilist.totalEpisodes - 1
-        )
-          matching.push(result);
-      })
-    }
-  }));
+  await Promise.all(
+    gogoResults.map(async (result) => {
+      if (result.released === anilist.year) {
+        await getAnimeDetails(result.id).then((details) => {
+          if (
+            details.totalEpisodes === anilist.totalEpisodes ||
+            details.totalEpisodes === anilist.totalEpisodes - 1
+          )
+            matching.push(result);
+        });
+      }
+    })
+  );
   return matching;
 }
 

@@ -11,7 +11,7 @@ router.get("/:page", async (req: Request, res: Response) => {
   } else {
     await getRecentlyAdded(parseInt(page))
       .then((populars) => res.json(populars))
-      .catch((err) => res.json(err));
+      .catch((err) => res.status(404).json(err));
   }
 });
 

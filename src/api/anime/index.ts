@@ -7,10 +7,6 @@ import {router as animeDetails} from "./animeDetails";
 import {router as watch} from "./watch";
 import {router as getId} from "./getId";
 const router: Router = express.Router();
-
-router.get("/", (req: Request, res: Response) => {
-    res.json("this is the anime route");
-});
   
 router.use("/popular",popular);
 router.use("/search",search);

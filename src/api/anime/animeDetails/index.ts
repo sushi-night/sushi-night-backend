@@ -7,7 +7,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   await getAnimeDetails(id)
     .then((details) => res.json(details))
-    .catch((err) => res.json(err));
+    .catch((err) => res.status(404).json(err));
 });
 
 export { router };

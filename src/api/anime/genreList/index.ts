@@ -3,10 +3,10 @@ import { getGenreList } from "animu-desu";
 
 const router: Router = express.Router();
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (_: Request, res: Response) => {
   await getGenreList()
     .then((genreList) => res.json(genreList))
-    .catch((err) => res.json(err));
+    .catch((err) => res.status(404).json(err));
 });
 
 export { router };
