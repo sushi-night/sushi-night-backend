@@ -21,5 +21,5 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     yield animu_desu_1.getAnimeDetails(id)
         .then((details) => res.json(details))
-        .catch((err) => res.status(404).json(err));
+        .catch((err) => res.status(400).json(err));
 }));

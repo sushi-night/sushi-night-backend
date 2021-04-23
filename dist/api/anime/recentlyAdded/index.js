@@ -25,6 +25,6 @@ router.get("/:page", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     else {
         yield animu_desu_1.getRecentlyAdded(parseInt(page))
             .then((populars) => res.json(populars))
-            .catch((err) => res.status(404).json(err));
+            .catch((err) => res.status(400).json(err));
     }
 }));

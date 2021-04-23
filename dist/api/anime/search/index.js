@@ -20,22 +20,22 @@ exports.router = router;
 router.get("/q/:word/:page", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { word, page } = req.params;
     if (isNaN(parseInt(page))) {
-        res.status(404).json({ error: "Parameter type must be integer." });
+        res.status(400).json({ error: "Parameter type must be integer." });
     }
     else {
         yield animu_desu_1.search(word, parseInt(page))
             .then((results) => res.json(results))
-            .catch((err) => res.status(404).json(err));
+            .catch((err) => res.status(400).json(err));
     }
 }));
 router.get("/g/:genre/:page", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { genre, page } = req.params;
     if (isNaN(parseInt(page))) {
-        res.status(404).json({ error: "Parameter type must be integer." });
+        res.status(400).json({ error: "Parameter type must be integer." });
     }
     else {
         yield animu_desu_1.searchByGenre(genre, parseInt(page))
             .then((results) => res.json(results))
-            .catch((err) => res.status(404).json(err));
+            .catch((err) => res.status(400).json(err));
     }
 }));

@@ -16,7 +16,7 @@ router.get(
         totalEpisodes: parseInt(totalEpisodes),
       };
     } catch (err) {
-      res.status(404).json(err);
+      res.status(400).json(err);
     }
     let results = [] as AnimeAndDate[];
     let found = [] as AnimeAndDate[];
@@ -32,7 +32,7 @@ router.get(
           found.push(match);
         })
       )
-      .catch((err) => res.status(404).json(err));
+      .catch((err) => res.status(400).json(err));
 
     if (found.length > 2) {
       await Promise.all(
@@ -45,7 +45,7 @@ router.get(
                 }
               });
             })
-            .catch((err) => res.status(404).json(err));
+            .catch((err) => res.status(400).json(err));
         })
       );
     } else {

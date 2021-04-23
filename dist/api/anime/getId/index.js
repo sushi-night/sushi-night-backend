@@ -29,7 +29,7 @@ router.get("/:title/:totalEpisodes/:otherNames/:year", (req, res) => __awaiter(v
         };
     }
     catch (err) {
-        res.status(404).json(err);
+        res.status(400).json(err);
     }
     let results = [];
     let found = [];
@@ -41,7 +41,7 @@ router.get("/:title/:totalEpisodes/:otherNames/:year", (req, res) => __awaiter(v
         .then((matching) => matching.map((match) => {
         found.push(match);
     }))
-        .catch((err) => res.status(404).json(err));
+        .catch((err) => res.status(400).json(err));
     if (found.length > 2) {
         yield Promise.all(found.map((animeFromQuery) => __awaiter(void 0, void 0, void 0, function* () {
             yield animu_desu_1.getAnimeDetails(animeFromQuery.id)
@@ -52,7 +52,7 @@ router.get("/:title/:totalEpisodes/:otherNames/:year", (req, res) => __awaiter(v
                     }
                 });
             })
-                .catch((err) => res.status(404).json(err));
+                .catch((err) => res.status(400).json(err));
         })));
     }
     else {
