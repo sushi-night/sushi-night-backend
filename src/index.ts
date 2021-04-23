@@ -1,4 +1,3 @@
-require("dotenv").config();
 import express, { Application } from "express";
 import cors from "cors";
 import { router } from "./api";
@@ -9,6 +8,6 @@ app.use(cors());
 
 app.use("/api", router);
 
-app.listen(process.env.PORT);
+export { app };
 //usage : import { app } from "./index.ts"
 // app.listen(port);
