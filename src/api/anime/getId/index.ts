@@ -20,30 +20,34 @@ router.get(
       let found = [] as AnimeAndDate[];
       let toReturn = [] as string[];
 
-      results = await search(decodeURIComponent(title), 1);
+      results = await search(title, 1);
 
-      for (var result of results) {
-        var matching: AnimeAndDate[] = [];
-        if (result.released === anilist.year) {
-          const details = await getAnimeDetails(result.id);
-          if (
-            details.totalEpisodes === anilist.totalEpisodes ||
-            details.totalEpisodes === anilist.totalEpisodes - 1
-          )
-            matching.push(result);
-        }
-        found = matching;
-      }
+      await Promise.all(
+        results.map(async (result) => {
+          var matching: AnimeAndDate[] = [];
+          if (result.released === anilist.year) {
+            const details = await getAnimeDetails(result.id);
+            if (
+              details.totalEpisodes === anilist.totalEpisodes ||
+              details.totalEpisodes === anilist.totalEpisodes - 1
+            )
+              matching.push(result);
+          }
+          found = matching;
+        })
+      );
 
       if (found.length > 2) {
-        for (var f of found) {
-          const details = await getAnimeDetails(f.id);
-          anilist.otherNames.split(",").map((name) => {
-            if (details.otherNames.includes(name)) {
-              toReturn.push(details.id);
-            }
-          });
-        }
+        await Promise.all(
+          found.map(async (f) => {
+            const details = await getAnimeDetails(f.id);
+            anilist.otherNames.split(",").map((name) => {
+              if (details.otherNames.includes(name)) {
+                toReturn.push(details.id);
+              }
+            });
+          })
+        );
       } else {
         found.map((match) => {
           toReturn.push(match.id);
