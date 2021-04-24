@@ -6,12 +6,12 @@ const router: Router = express.Router();
 router.get("/:page", async (req: Request, res: Response) => {
   const { page } = req.params;
 
-  if (isNaN(parseInt(page))) {
-    res.status(400).json({ error: "Parameter type must be integer." });
-  } else {
-    await getPopular(parseInt(page))
-      .then((populars) => res.json(populars))
-      .catch((err) => res.status(400).json(err));
+  try {
+    const results = await getPopular(parseInt(page));
+    res.json(results);
+    return;
+  } catch (err) {
+    return res.status(400).json(err);
   }
 });
 

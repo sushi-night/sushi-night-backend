@@ -4,9 +4,13 @@ import { getGenreList } from "animu-desu";
 const router: Router = express.Router();
 
 router.get("/", async (_: Request, res: Response) => {
-  await getGenreList()
-    .then((genreList) => res.json(genreList))
-    .catch((err) => res.status(400).json(err));
+  try {
+    const genreList = await getGenreList();
+    res.json(genreList);
+    return;
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
 
 export { router };

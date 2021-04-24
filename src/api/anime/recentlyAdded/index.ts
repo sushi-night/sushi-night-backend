@@ -7,11 +7,11 @@ router.get("/:page", async (req: Request, res: Response) => {
   const { page } = req.params;
 
   if (isNaN(parseInt(page))) {
-    res.json({ error: "Parameter type must be integer." });
+    return res.json({ error: "Parameter type must be integer." });
   } else {
     await getRecentlyAdded(parseInt(page))
       .then((populars) => res.json(populars))
-      .catch((err) => res.status(400).json(err));
+      .catch((err) => {return res.status(400).json(err)});
   }
 });
 

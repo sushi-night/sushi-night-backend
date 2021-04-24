@@ -5,12 +5,13 @@ const router: Router = express.Router();
 
 router.get("/:id/:episode", async (req: Request, res: Response) => {
   const { id, episode } = req.params;
-  if (isNaN(parseInt(episode))) {
-    res.status(400).json({ error: "Episode must be integer." });
-  } else {
-    await getEpisodeLinks(id,parseInt(episode))
-      .then((links) => res.json(links))
-      .catch((err) => res.status(400).json(err));
+
+  try {
+    const results = await getEpisodeLinks(id, parseInt(episode));
+    res.json(results);
+    return;
+  } catch (err) {
+    return res.status(400).json(err);
   }
 });
 
