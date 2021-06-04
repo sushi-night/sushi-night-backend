@@ -1,5 +1,10 @@
 import express, { Request, Response, Router } from "express";
-import { getAnimeDetails, search, AnimeAndDate } from "animu-desu";
+import {
+  getAnimeDetails,
+  search,
+  AnimeAndDate,
+  AnimeDetails,
+} from "animu-desu";
 const router: Router = express.Router();
 
 router.get(
@@ -7,49 +12,42 @@ router.get(
   async (req: Request, res: Response) => {
     try {
       const { title, totalEpisodes, otherNames, year } = req.params;
-      let anilist = {} as animeFromAnilist;
-
-      anilist = {
+      let anilist = {
         otherNames: decodeURIComponent(otherNames),
         title: decodeURIComponent(title),
         year: parseInt(year),
         totalEpisodes: parseInt(totalEpisodes),
-      };
+      } as animeFromAnilist;
 
       let results = [] as AnimeAndDate[];
-      let found = [] as AnimeAndDate[];
+      let matching = [] as AnimeDetails[];
       let toReturn = [] as string[];
 
       results = await search(title, 1);
 
       await Promise.all(
         results.map(async (result) => {
-          var matching: AnimeAndDate[] = [];
           if (result.released === anilist.year) {
             const details = await getAnimeDetails(result.id);
             if (
               details.totalEpisodes === anilist.totalEpisodes ||
               details.totalEpisodes === anilist.totalEpisodes - 1
             )
-              matching.push(result);
+              matching.push(details);
           }
-          found = matching;
         })
       );
 
-      if (found.length > 2) {
-        await Promise.all(
-          found.map(async (f) => {
-            const details = await getAnimeDetails(f.id);
-            anilist.otherNames.split(",").map((name) => {
-              if (details.otherNames.includes(name)) {
-                toReturn.push(details.id);
-              }
-            });
-          })
-        );
+      if (matching.length > 2) {
+        matching.map((m) => {
+          anilist.otherNames.split(",").map((name) => {
+            if (m.otherNames.includes(name)) {
+              toReturn.push(m.id);
+            }
+          });
+        });
       } else {
-        found.map((match) => {
+        matching.map((match) => {
           toReturn.push(match.id);
         });
       }

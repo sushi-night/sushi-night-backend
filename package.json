@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/system32uwu/sushi-night-backend.git"
+    "url": "git+https://github.com/sushi-night/sushi-night-backend.git"
   },
   "keywords": [
-    "animu-desu",
+    "gogoanime",
     "anime"
   ],
-  "author": "Мэтью",
+  "author": "Mateo Carriqui",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/system32uwu/sushi-night-backend/issues"
+    "url": "https://github.com/sushi-night/sushi-night-backend/issues"
   },
-  "homepage": "https://github.com/system32uwu/sushi-night-backend#readme",
+  "homepage": "https://github.com/sushi-night/sushi-night-backend#readme",
   "devDependencies": {
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.11",
@@ -33,7 +33,6 @@
   "dependencies": {
     "animu-desu": "^1.0.14",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1"
   }
 }
