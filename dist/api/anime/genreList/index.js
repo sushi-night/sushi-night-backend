@@ -18,7 +18,12 @@ const animu_desu_1 = require("animu-desu");
 const router = express_1.default.Router();
 exports.router = router;
 router.get("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield animu_desu_1.getGenreList()
-        .then((genreList) => res.json(genreList))
-        .catch((err) => res.status(400).json(err));
+    try {
+        const genreList = yield animu_desu_1.getGenreList();
+        res.json(genreList);
+        return;
+    }
+    catch (err) {
+        return res.status(400).json(err);
+    }
 }));

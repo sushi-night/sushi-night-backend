@@ -19,12 +19,12 @@ const router = express_1.default.Router();
 exports.router = router;
 router.get("/:id/:episode", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, episode } = req.params;
-    if (isNaN(parseInt(episode))) {
-        res.status(400).json({ error: "Episode must be integer." });
+    try {
+        const results = yield animu_desu_1.getEpisodeLinks(id, parseInt(episode));
+        res.json(results);
+        return;
     }
-    else {
-        yield animu_desu_1.getEpisodeLinks(id, parseInt(episode))
-            .then((links) => res.json(links))
-            .catch((err) => res.status(400).json(err));
+    catch (err) {
+        return res.status(400).json(err);
     }
 }));

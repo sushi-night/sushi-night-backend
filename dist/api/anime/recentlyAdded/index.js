@@ -20,11 +20,11 @@ exports.router = router;
 router.get("/:page", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { page } = req.params;
     if (isNaN(parseInt(page))) {
-        res.json({ error: "Parameter type must be integer." });
+        return res.json({ error: "Parameter type must be integer." });
     }
     else {
         yield animu_desu_1.getRecentlyAdded(parseInt(page))
             .then((populars) => res.json(populars))
-            .catch((err) => res.status(400).json(err));
+            .catch((err) => { return res.status(400).json(err); });
     }
 }));

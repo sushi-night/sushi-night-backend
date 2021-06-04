@@ -18,62 +18,45 @@ const animu_desu_1 = require("animu-desu");
 const router = express_1.default.Router();
 exports.router = router;
 router.get("/:title/:totalEpisodes/:otherNames/:year", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, totalEpisodes, otherNames, year } = req.params;
-    let anilist = {};
     try {
-        anilist = {
+        const { title, totalEpisodes, otherNames, year } = req.params;
+        let anilist = {
             otherNames: decodeURIComponent(otherNames),
             title: decodeURIComponent(title),
             year: parseInt(year),
             totalEpisodes: parseInt(totalEpisodes),
         };
+        let results = [];
+        let matching = [];
+        let toReturn = [];
+        results = yield animu_desu_1.search(title, 1);
+        yield Promise.all(results.map((result) => __awaiter(void 0, void 0, void 0, function* () {
+            if (result.released === anilist.year) {
+                const details = yield animu_desu_1.getAnimeDetails(result.id);
+                if (details.totalEpisodes === anilist.totalEpisodes ||
+                    details.totalEpisodes === anilist.totalEpisodes - 1)
+                    matching.push(details);
+            }
+        })));
+        if (matching.length > 2) {
+            matching.map((m) => {
+                anilist.otherNames.split(",").map((name) => {
+                    if (m.otherNames.includes(name)) {
+                        toReturn.push(m.id);
+                    }
+                });
+            });
+        }
+        else {
+            matching.map((match) => {
+                toReturn.push(match.id);
+            });
+        }
+        res.json(toReturn);
+        return;
     }
     catch (err) {
         res.status(400).json(err);
+        return;
     }
-    let results = [];
-    let found = [];
-    let toReturn = [];
-    yield animu_desu_1.search(decodeURIComponent(title), 1)
-        .then((data) => (results = data))
-        .catch((err) => res.json(err));
-    yield compareYearAndTotalEpisodes(anilist, results)
-        .then((matching) => matching.map((match) => {
-        found.push(match);
-    }))
-        .catch((err) => res.status(400).json(err));
-    if (found.length > 2) {
-        yield Promise.all(found.map((animeFromQuery) => __awaiter(void 0, void 0, void 0, function* () {
-            yield animu_desu_1.getAnimeDetails(animeFromQuery.id)
-                .then((details) => {
-                anilist.otherNames.split(",").map((name) => {
-                    if (details.otherNames.includes(name)) {
-                        toReturn.push(details.id);
-                    }
-                });
-            })
-                .catch((err) => res.status(400).json(err));
-        })));
-    }
-    else {
-        found.map((match) => {
-            toReturn.push(match.id);
-        });
-    }
-    res.json(toReturn);
 }));
-function compareYearAndTotalEpisodes(anilist, gogoResults) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let matching = [];
-        yield Promise.all(gogoResults.map((result) => __awaiter(this, void 0, void 0, function* () {
-            if (result.released === anilist.year) {
-                yield animu_desu_1.getAnimeDetails(result.id).then((details) => {
-                    if (details.totalEpisodes === anilist.totalEpisodes ||
-                        details.totalEpisodes === anilist.totalEpisodes - 1)
-                        matching.push(result);
-                });
-            }
-        })));
-        return matching;
-    });
-}
